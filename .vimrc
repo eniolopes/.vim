@@ -13,7 +13,7 @@ set encoding=utf-8
 let g:Powerline_symbols = 'unicode'
 let g:Powerline_theme='default'
 let g:Powerline_colorscheme='solarized16_dark'
-let g:Powerline_stl_path_style = 'full'
+let g:Powerline_stl_path_style = 'short'
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
@@ -90,7 +90,9 @@ augroup vimrcEx
   autocmd! FileType mkd setlocal syn=off
 augroup END
 
-autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let expect
+autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify
+it_should_behave_like before after setup subject its shared_examples_for
+shared_context let expect
 highlight def link rubyRspec Function
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
