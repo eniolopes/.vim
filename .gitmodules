@@ -1,0 +1,6 @@
+[submodule "bundle/colorschemes"]
+	path = bundle/colorschemes
+	url = git@github.com:flazz/vim-colorschemes.git
+[submodule "bundle/vim-solarized-powerline"]
+	path = bundle/vim-solarized-powerline
+	url = git@github.com:stephenmckinney/vim-solarized-powerline.git
