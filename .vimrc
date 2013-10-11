@@ -90,7 +90,7 @@ augroup vimrcEx
   autocmd! FileType mkd setlocal syn=off
 augroup END
 
-autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let expect double
+autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let expect double to eq not_to
 highlight def link rubyRspec Function
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
