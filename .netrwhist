@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/eniolopes/Projects/Palpiteros/Palpiteros/app/models'
-let g:netrw_dirhist_2='/Users/eniolopes/Projects/Palpiteros/Palpiteros/app/controllers/gateway'
-let g:netrw_dirhist_3='/Users/eniolopes/Projects/Palpiteros/Palpiteros/app/gateway_handlers'
