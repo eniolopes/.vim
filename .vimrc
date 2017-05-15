@@ -1,139 +1,119 @@
-call pathogen#infect()
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BASIC EDITING CONFIGURATION
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set list listchars=trail:.
-set nocompatible
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" POWERLINE CONFIGS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set encoding=utf-8
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-let g:Powerline_symbols = 'unicode'
-let g:Powerline_theme='default'
-let g:Powerline_colorscheme='solarized16_dark'
-let g:Powerline_stl_path_style = 'short'
-" allow unsaved background buffers and remember marks/undo for them
-set hidden
-" remember more commands and search history
-set history=10000
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set autoindent
-set laststatus=2
-set showmatch
-set incsearch
-set hlsearch
-" make searches case-sensitive only if they contain upper-case characters
-set ignorecase smartcase
-" highlight current line
-set cursorline
-set cmdheight=2
-set switchbuf=useopen
-set numberwidth=5
-set number
-set ruler
-set showtabline=2
-set winwidth=79
-set shell=bash
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
-" keep more context when scrolling off the end of a buffer
-set scrolloff=3
-" Store temporary files in a central spot
-set nobackup
-set noswapfile
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-" display incomplete commands
-set showcmd
-" Enable highlighting for syntax
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'jiangmiao/auto-pairs'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"Setup
 syntax on
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
-" Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
-let mapleader=","
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CUSTOM AUTOCMDS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup vimrcEx
-  " Clear all autocmds in the group
-  autocmd!
-  autocmd FileType text setlocal textwidth=78
-  " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-  "for ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,javascript,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
-  autocmd FileType python set sw=4 sts=4 et
-
-  autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-  autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
-  autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
-
-  " Indent p tags
-  autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
-
-  " Don't syntax highlight markdown because it's often wrong
-  autocmd! FileType mkd setlocal syn=off
-augroup END
-
-autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let expect double to eq not_to
-highlight def link rubyRspec Function
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" COLOR
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable
+set ts=2 sts=2 sw=2 expandtab autoindent
+set hlsearch
+set nowrap
+set visualbell t_vb=
+set scrolloff=3
+set nofoldenable
+set wildmode=list:longest
+set wildignore=*.o,*.obj,*.swp,*~,#*#,tmp/,node_modules/
+set list
+set listchars=tab:\ ¬,trail:.
+set mouse=a
+set hidden
+set switchbuf=useopen
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set undodir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set ttyfast
+set lazyredraw
+set undofile
+set number
 set background=dark
-" solarized options
-let g:solarized_termcolors = 16
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-colorscheme solarized
+set clipboard=unnamed
+set laststatus=2
 
-" Show trailing whitespace:
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+"Custom Bindings
+:let mapleader=","
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC KEY MAPS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>y "+y
-map <leader>p "+p
+"Close current buffer
+map <leader>q :bd<cr>
 
-map <leader>n :NERDTree<cr>
-" Clear the search buffer when hitting return
+"Copy to Clipboard
+:vmap <leader>y "*y
+:vmap <leader>p "*p
+"Clear the search buffer
 :nnoremap <CR> :nohlsearch<cr>
-nnoremap <leader><leader> <c-^>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ARROW KEYS ARE UNACCEPTABLE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Left> :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up> :echo "no!"<cr>
-map <Down> :echo "no!"<cr>
+"Switch to alternate file
+map <Tab> :bnext<cr>
+map <S-Tab> :bprevious<cr>
 
-map <leader>gv :CtrlPClearCache<cr>\|:CtrlP app/views<cr>
-map <leader>gc :CtrlPClearCache<cr>\|:CtrlP app/controllers<cr>
-map <leader>gm :CtrlPClearCache<cr>\|:CtrlP app/models<cr>
-map <leader>gh :CtrlPClearCache<cr>\|:CtrlP app/helpers<cr>
-map <leader>gl :CtrlPClearCache<cr>\|:CtrlP lib<cr>
-map <leader>gj :CtrlPClearCache<cr>\|:CtrlP app/assets/javascripts<cr>
-map <leader>gs :CtrlPClearCache<cr>\|:CtrlP spec<cr>
-map <leader>gt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
-map <leader>F :CtrlPClearCache<cr>\|:CtrlP %%<cr>
-map <leader>f :CtrlP<cr>
-map <leader>gg :open Gemfile<cr>
+"Clist navigation
+map ]q :cnext<cr>
+map [q :cprevious<cr>
+
+"Syntax Highlight
+au BufRead,BufNewFile *.scss set filetype=scss.css
+au BufRead,BufNewFile *.stache set filetype=html
+
+"Color Scheme
+colorscheme seoul256-light
+
+"NERDTree
+map <leader>n :NERDTree<CR>
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+"Closes vim when only NERDTree is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"ctrlp
+let g:ctrlp_map = '<leader>f'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|node_modules|_build|deps$'
+
+"syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+let g:javascript_plugin_jsdoc = 1
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+"airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 0
+
+"jsx syntax on js files
+let g:jsx_ext_required = 0
